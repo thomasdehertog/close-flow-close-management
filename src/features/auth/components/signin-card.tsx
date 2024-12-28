@@ -12,12 +12,12 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { useLogin } from "../api/use-login"
-import { loginSchema } from "../schemas"
+import { loginSchema, type LoginValues } from "../schemas"
 
 export const SignInCard = () => {
   const { mutate } = useLogin()
   
-  const form = useForm<z.infer<typeof loginSchema>>({
+  const form = useForm<LoginValues>({
     defaultValues: {
       email: "",
       password: "",
@@ -25,19 +25,17 @@ export const SignInCard = () => {
     resolver: zodResolver(loginSchema),
   })
 
-  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+  const onSubmit = (values: LoginValues) => {
     mutate({ json: values })
   }
 
   return (
     <Card className="w-full max-w-[486px] border-none shadow-none">
-      <CardHeader className="flex items-center justify-center text-center p-7">
+      <CardHeader className="flex items-center justify-center text-center p-7 border-b">
         <CardTitle className="text-2xl">Welcome back</CardTitle>
       </CardHeader>
 
       <div className="px-7">
-        <DottedSeparator className="mb-7" />
-        
         <CardContent className="p-7 space-y-4">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

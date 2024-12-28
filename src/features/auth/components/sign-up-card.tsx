@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { DottedSeparator } from "@/components/dotted-separator"
@@ -27,31 +27,35 @@ export function SignUpCard() {
   }
 
   return (
-    <Card className="w-[486px] border-none shadow-none">
-      <CardHeader className="flex items-center justify-center text-center p-7">
-        <CardTitle className="text-2xl">Sign up</CardTitle>
-        <CardDescription>
-          By signing up you agree to our{" "}
-          <Link href="/privacy" className="text-blue-700">Privacy Policy</Link>{" "}
-          and{" "}
-          <Link href="/terms" className="text-blue-700">Terms of Service</Link>
-        </CardDescription>
+    <Card className="w-full max-w-[486px] border-none shadow-none">
+      <CardHeader className="flex flex-col items-start p-7 gap-2">
+        <CardTitle className="text-[32px] font-medium text-[#333333]">
+          Create an account
+        </CardTitle>
+        <p className="text-[16px] text-[#333333]">
+          Already have an account?{" "}
+          <Link href="/sign-in" className="text-[#111111] underline">
+            Log in
+          </Link>
+        </p>
       </CardHeader>
 
-      <div className="px-7">
-        <DottedSeparator />
-      </div>
-
-      <CardContent className="p-7 space-y-4">
+      <CardContent className="p-7 space-y-6">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="space-y-1">
+                  <div className="text-[16px] text-[#666666] font-normal">
+                    User name
+                  </div>
                   <FormControl>
-                    <Input placeholder="Enter your name" {...field} />
+                    <Input 
+                      {...field}
+                      className="h-[56px] rounded-[12px] border-[#666666]/35"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -59,11 +63,18 @@ export function SignUpCard() {
             />
             <FormField
               control={form.control}
-              name="email" 
+              name="email"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="space-y-1">
+                  <div className="text-[16px] text-[#666666] font-normal">
+                    Email address
+                  </div>
                   <FormControl>
-                    <Input type="email" placeholder="Enter email address" {...field} />
+                    <Input 
+                      type="email"
+                      {...field}
+                      className="h-[56px] rounded-[12px] border-[#666666]/35"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -73,47 +84,58 @@ export function SignUpCard() {
               control={form.control}
               name="password"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="space-y-1">
+                  <div className="text-[16px] text-[#666666] font-normal">
+                    Password
+                  </div>
                   <FormControl>
-                    <Input type="password" placeholder="Enter password" {...field} />
+                    <Input 
+                      type="password"
+                      {...field}
+                      className="h-[56px] rounded-[12px] border-[#666666]/35"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" size="lg">
+            <Button 
+              type="submit" 
+              className="w-full h-[56px] rounded-[12px] text-[16px]"
+            >
               Sign up
             </Button>
           </form>
         </Form>
-      </CardContent>
 
-      <div className="px-7">
-        <DottedSeparator />
-      </div>
+        <div className="flex items-center gap-6">
+          <div className="h-[2px] flex-1 bg-[#666666]/25" />
+          <div className="text-[24px] text-[#666666] font-normal">OR</div>
+          <div className="h-[2px] flex-1 bg-[#666666]/25" />
+        </div>
 
-      <CardContent className="p-7 flex flex-col gap-y-4">
-        <Button variant="secondary" size="lg" className="w-full" disabled>
-          <FcGoogle className="mr-2" size={20} />
-          Sign up with Google
-        </Button>
-        <Button variant="secondary" size="lg" className="w-full" disabled>
-          <FaGithub className="mr-2" size={20} />
-          Sign up with GitHub
-        </Button>
-      </CardContent>
-
-      <div className="px-7">
-        <DottedSeparator />
-      </div>
-
-      <CardContent className="p-7 flex items-center justify-center">
-        <p>
-          Already have an account?{" "}
-          <Link href="/sign-in" className="text-blue-700">
-            Sign in
-          </Link>
-        </p>
+        <div className="flex flex-col gap-4">
+          <Button 
+            variant="outline" 
+            className="w-full h-[80px] rounded-[40px] border-[#333333] border-[1px] text-[24px] text-[#333333] font-normal hover:bg-white"
+            disabled={false}
+          >
+            <div className="flex items-center gap-4">
+              <FcGoogle size={24} />
+              <span>Sign up with Google</span>
+            </div>
+          </Button>
+          <Button 
+            variant="outline"
+            className="w-full h-[80px] rounded-[40px] border-[#333333] border-[1px] text-[24px] text-[#333333] font-normal hover:bg-white"
+            disabled={false}
+          >
+            <div className="flex items-center gap-4">
+              <FaGithub size={24} />
+              <span>Sign up with GitHub</span>
+            </div>
+          </Button>
+        </div>
       </CardContent>
     </Card>
   )

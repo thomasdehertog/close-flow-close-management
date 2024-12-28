@@ -1,20 +1,30 @@
-"use client"
-
 import React from "react"
+import Image from "next/image"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
-  const isSignIn = pathname === "/sign-in"
+interface AuthLayoutProps {
+  children: React.ReactNode
+  params: {
+    pathname: string
+  }
+}
+
+export function AuthLayoutBase({ children, params }: AuthLayoutProps) {
+  const isSignIn = params.pathname === "/sign-in"
 
   return (
     <main className="flex min-h-screen">
       {/* Left side - Colored background */}
       <div className="hidden lg:flex w-1/2 relative">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-pink-400 via-purple-400 to-indigo-400 opacity-90" />
-        <div className="absolute inset-0 mix-blend-multiply bg-gradient-to-br from-yellow-100/50 via-pink-300/50 to-violet-500/50" />
+        <div className="absolute inset-0 bg-gradient-to-br from-yellow-100 via-pink-300 to-violet-500" />
+        <Image
+          src="/placeholder.jpg"
+          alt="Background"
+          fill
+          className="object-cover mix-blend-overlay"
+          priority
+        />
       </div>
 
       {/* Right side - Content */}
