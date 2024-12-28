@@ -1,0 +1,9 @@
+npx create-next-app@latest close-flow-close-management --typescript --tailwind --eslint
+cd close-flow-close-management 
+git init
+git add .
+git commit -m "Initial commit: Project setup with Next.js, Hono, and TanStack Query"
+git branch -M main
+git remote add origin https://github.com/thomasdehertog/close-flow-close-management.git
+git push -u origin main 
+npm install @tanstack/react-query hono @hono/node-server 
