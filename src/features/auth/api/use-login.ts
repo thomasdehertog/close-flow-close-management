@@ -1,34 +1,19 @@
-import { useMutation } from "@tanstack/react-query"
-import { LoginValues } from "../schemas"
+import { useMutation } from '@tanstack/react-query'
+import { client } from '@/lib/api-client'
+import { LoginValues } from '../schemas'
 
-interface LoginResponse {
-  success: boolean
-  message: string
-  token?: string
-}
+export function useLogin() {
+  return useMutation({
+    mutationFn: async (values: LoginValues) => {
+      const response = await client.api.auth.login.post({
+        json: values
+      })
 
-interface LoginOptions {
-  json: LoginValues
-}
+      if (!response.success) {
+        throw new Error(response.message || 'Login failed')
+      }
 
-const login = async ({ json }: LoginOptions): Promise<LoginResponse> => {
-  const response = await fetch("/api/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(json),
-  })
-
-  if (!response.ok) {
-    throw new Error("Login failed")
-  }
-
-  return response.json()
-}
-
-export const useLogin = () => {
-  return useMutation<LoginResponse, Error, LoginOptions>({
-    mutationFn: login
+      return response
+    }
   })
 } 

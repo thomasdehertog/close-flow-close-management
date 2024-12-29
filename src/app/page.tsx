@@ -1,7 +1,17 @@
-export default function Home() {
+import { redirect } from 'next/navigation'
+import { getCurrent } from '@/features/auth/actions'
+import { UserButton } from '@/features/auth/components/user-button'
+
+export default async function Home() {
+  const user = await getCurrent()
+  
+  if (!user) {
+    redirect('/sign-in')
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold">Close Flow Management</h1>
-    </main>
-  );
+    <div>
+      <UserButton />
+    </div>
+  )
 } 

@@ -14,35 +14,34 @@ import { useLogin } from "../api/use-login"
 import { LoginValues, loginSchema } from "../schemas"
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
+import { useQueryClient } from "@tanstack/react-query"
 
 export const SignInCard = () => {
   const { toast } = useToast()
   const router = useRouter()
-  const { mutate, isLoading } = useLogin()
+  const queryClient = useQueryClient()
+  const { mutate, isPending } = useLogin()
   
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
-    },
+      email: '',
+      password: ''
+    }
   })
 
   const onSubmit = (values: LoginValues) => {
-    mutate({ json: values }, {
-      onSuccess: (data) => {
-        toast({
-          title: "Success",
-          description: data.message,
-        })
-        // Redirect or update auth state
-        router.push("/dashboard")
+    mutate(values, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['current'] })
+        router.refresh()
+        router.push('/')
       },
       onError: (error) => {
         toast({
-          variant: "destructive", 
+          variant: "destructive",
           title: "Error",
-          description: error.message
+          description: error.message || 'Failed to log in'
         })
       }
     })
@@ -95,8 +94,8 @@ export const SignInCard = () => {
               )}
             />
 
-            <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
-              {isLoading ? "Logging in..." : "Log in"}
+            <Button type="submit" className="w-full" size="lg" disabled={isPending}>
+              {isPending ? "Logging in..." : "Log in"}
             </Button>
           </form>
         </Form>
