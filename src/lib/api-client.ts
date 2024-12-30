@@ -1,4 +1,5 @@
 import { hc } from 'hono/client'
-import type { AppType } from '@/app/api/auth/[...route]/route'
+import type { AppType } from '@/app/api/[[...route]]/route'
 
-export const client = hc<AppType>('/api/auth') 
+// Create type-safe client
+export const client = hc<AppType>('/api') 
